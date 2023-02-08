@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 const Counter = props => {
-  const { value } = props
+  const { value, onIncrement, onDecrement, onDelete, ...rest } = props
 
   const formatValue = () => {
     return value === 0 ? 'empty' : value
@@ -13,30 +13,24 @@ const Counter = props => {
     return classes
   }
 
+  const handleIncrement = () => onIncrement(rest.id)
+
+  const handleDecrement = () => onDecrement(rest.id)
+
   return (
     <div>
-      <span>{props.name}</span>
+      <span>{rest.name}</span>
       <span className={getBadgeClasses()}>{formatValue()}</span>
-      <button
-        className='btn btn-primary btn-sm m-2'
-        onClick={() => {
-          props.onIncrement(props.id)
-        }}
-      >
+      <button className='btn btn-primary btn-sm m-2' onClick={handleIncrement}>
         +
       </button>
-      <button
-        className='btn btn-primary btn-sm m-2'
-        onClick={() => {
-          props.onDecrement(props.id)
-        }}
-      >
+      <button className='btn btn-primary btn-sm m-2' onClick={handleDecrement}>
         -
       </button>
       <button
         className='btn btn-danger btn-sm m-2'
         onClick={() => {
-          props.onDelete(props.id)
+          onDelete(rest.id)
         }}
       >
         Delete

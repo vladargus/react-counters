@@ -20,23 +20,27 @@ const CountersList = () => {
     setCounters(initialState)
   }
 
-  // Инкремент одним способом
   const handleIncrement = id => {
-    const newCounters = [...counters]
-    const indexC = newCounters.findIndex(c => c.id === id)
-    newCounters[indexC].value++
+    const newCounters = counters.map(c =>
+      c.id === id
+        ? {
+            ...c,
+            value: c.value + 1,
+          }
+        : c
+    )
     setCounters(newCounters)
   }
 
-  // Декремент другим способом, какой адекватнее? Или оба не очень?)
   const handleDecrement = id => {
-    const newCounters = counters.map(c => {
-      if (c.id === id) {
-        c.value--
-        return c
-      }
-      return c
-    })
+    const newCounters = counters.map(c =>
+      c.id === id && c.value > 0
+        ? {
+            ...c,
+            value: c.value - 1,
+          }
+        : c
+    )
     setCounters(newCounters)
   }
 
